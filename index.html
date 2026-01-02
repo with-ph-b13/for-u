@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For You ❤️</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         body {
             margin: 0;
@@ -13,56 +14,62 @@
             align-items: center;
             height: 100vh;
             background-color: #ffe0e9;
-            font-family: sans-serif;
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden;
         }
 
         .container {
             text-align: center;
             background: white;
             padding: 50px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 90%;
         }
 
         h1 {
             color: #d63384;
-            font-size: 2rem;
-            margin-bottom: 30px;
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            line-height: 1.4;
         }
 
         .buttons {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 40px;
-            min-height: 50px;
+            gap: 30px;
         }
 
         button {
-            padding: 12px 30px;
+            padding: 12px 35px;
             font-size: 1.1rem;
+            font-weight: bold;
             border: none;
-            border-radius: 25px;
+            border-radius: 50px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s ease;
         }
 
         #yesBtn {
             background-color: #ff4d6d;
             color: white;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3);
         }
 
         #noBtn {
             background-color: #6c757d;
             color: white;
             position: relative;
+            z-index: 999;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1 id="question">I like you, do you like me?</h1>
+        <h1 id="question">I like you, <br> do you like me?</h1>
         <div class="buttons">
             <button id="yesBtn">Yes</button>
             <button id="noBtn">No</button>
@@ -84,8 +91,33 @@
         });
 
         yesBtn.addEventListener('click', () => {
-            question.innerHTML = "I knew it! ❤️";
+            question.innerHTML = "I knew it! ❤️ <br> I love you too!";
             document.querySelector('.buttons').style.display = 'none';
+
+            // Confetti Animation
+            var duration = 5 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 5,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#ff4d6d', '#ff8fa3', '#ffb3c1']
+                });
+                confetti({
+                    particleCount: 5,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#ff4d6d', '#ff8fa3', '#ffb3c1']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
         });
     </script>
 
